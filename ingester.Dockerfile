@@ -42,9 +42,11 @@ COPY ["config.yaml", "kowalski/generate_supervisord_conf.py", "kowalski/utils.py
       "kowalski/alert_broker_ztf.py",\
       "kowalski/ops_watcher_ztf.py",\
       "kowalski/tns_watcher.py",\
+      "kowalski/performance_reporter.py",\
       "kowalski/requirements_ingester.txt",\
-      "tests/test_ingester.py", "tests/test_tns_watcher.py",\
-      "tools/ingest_ztf_matchfiles.py", "tools/istarmap.py",\
+      "tests/test_ingester.py", "tests/test_tns_watcher.py", "tests/test_tools.py",\
+      "tools/ingest_ztf_matchfiles.py", "tools/ingest_ztf_source_features.py",\
+      "tools/istarmap.py",\
       "/app/"]
 
 # change working directory to /app
@@ -56,4 +58,3 @@ RUN pip install -r /app/requirements_ingester.txt --no-cache-dir && \
 
 # run container
 CMD /usr/local/bin/supervisord -n -c supervisord_ingester.conf
-#CMD python api.py

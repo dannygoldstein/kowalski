@@ -344,7 +344,7 @@ kowalski:
             prob_QSO: 1
             z_phot: 1
             z_phot_err: 1
-
+            
         PS1_DR1:
           filter: {}
           projection:
@@ -413,6 +413,11 @@ kowalski:
     max_retries: 100
     logging_level: "debug"
     openapi_validate: False
+
+  slack:
+    # Used by the performance_reporter.py task to post Slack messages
+    slack_bot_token:
+    slack_channel_id:
 
   # this is used to make supervisord.conf files at build time
   supervisord:
@@ -532,3 +537,13 @@ kowalski:
         stdout_logfile_maxbytes: 30MB
         redirect_stderr: True
         environment: "PRODUCTION=1"
+
+      "program:performance_reporter":
+        command: /usr/local/bin/python performance_reporter.py --send_to_slack --days_ago 1
+        directory: /app
+        user: root
+        autostart: true
+        autorestart: true
+        stdout_logfile: /data/logs/performance_reporter_stdout.log
+        stdout_logfile_maxbytes: 10MB
+        redirect_stderr: True
